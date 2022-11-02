@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Articles</title>
+    </head>
+    <body>
+        <h2>
+            Welcome to BlobBlog!
+        </h2>
+        <p>
+            There's so much you can do here!
+        </p>
+        <% if (users) { %>
+            <p>Welcome <%= users.username %> to our secret Book List</p>
+            <p>Below is a list of all available books</p>
+            <ul>
+            <% articles.forEach(function(article) { %>
+            <li><%= article.title %></li>
+            <% }); %>
+            </ul>
+            <br />
+            <form action="/logout" method="post">
+              <button type="submit">Logout</button>
+            </form>
+    
+        <% } else { %>
+            <p>Please <a href="/login">login</a> to view the Book List</p>
+        <% } %>
+        <!-- <p>Get on writing or get inspiration reading through these blogs</p>
+        <% if (user.users) { %>
+            <p>
+                You are logged in as <%= user.first_name %>
+            </p>
+            <p>
+                Go to your profile: <a href="/blogs">Profile</a>
+            </p>
+        <% } else { %>
+            <p>
+                <a href="/blogs/published">Articles</a>
+            </p>
+            <p>
+                <ul>
+                    <% blogs.forEach(articles => { %>
+                        <li>
+                            <h2>
+                                <%=articles.title %>
+                            </h2>
+                            <p>
+                                <%= articles.body %>
+                            </p>
+                        </li>
+                        <hr />
+                    <% }); %>
+                </ul>
+            </p>
+        <% } %> -->
+    </body>
+    <footer>
+        <p> &copy; 2022 BlobBlog</p>
+    </footer>    
+</html>
