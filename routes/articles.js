@@ -1,26 +1,20 @@
 const express = require ("express");
 const articleModel = require("../models/articles");
-const userModel = require("../models/users")
-const auth = require("./auth")
-// const User = require("../models/users");
-
 const articleRouter = express.Router();
-// const readingTime = require("./readTime")
+const {readingTime} = require("./readTime")
 const passport = require("passport");
-const { response } = require("express");
-const users = require("../models/users");
-// const connectEnsureLogin = require("connect-ensure-login")
 
-
-//Post new blog
-//functional
+// Post new blog
+// functional
 articleRouter.post("/", passport.authenticate("jwt", { session: false}), async (req, res) => {
     const article = await articleModel.create({
         title: req.body.title,
         description: req.body.description,
         body: req.body.body,
         tags: req.body.tags,
-        author: req.user
+        id: req.user._id,
+        author: user.firstName,
+        reading_time: readingTime(req.body.body)
     });
     res.send(article);
 })
@@ -28,23 +22,27 @@ articleRouter.post("/", passport.authenticate("jwt", { session: false}), async (
 
 // get blogs by author
 //functional
-articleRouter.get("/author/articles", passport.authenticate("jwt", { session: false}), (request, response) => {
-    articleModel.find({"author": request.user})
+articleRouter.get("/user/articles", passport.authenticate("jwt", { session: false}), (request, response) => {
+    articleModel.find({"user": request.user})
+    .select({title: 1})
     .then(articles => {
         response.status(200).send(articles)
     })
     .catch(err => {
         console.log(err)
-        response.status(404).send(err)
+        response.status(404).send({err: err.message});
     })
 });
 
 
-// get published blogs
-// functional
+// get list of published blogs
+// functional 
 articleRouter.get('/published', async (request, response) => {
     const article = request.params.state
-    await articleModel.find({state: "published"}).limit(20)
+    await articleModel.find({state: "published"})
+    .select({title: 1})
+    .populate("author", {firstName: 1})
+    .limit(20)
     .then(article => {
         response.status(200).send(article)
     })
@@ -56,11 +54,14 @@ articleRouter.get('/published', async (request, response) => {
 
 
 // get all blogs
-//functional
+// functional
 articleRouter.get("/", passport.authenticate("jwt", { session: false}), (request, response) => {
-    articleModel.find().limit(20)
-    .then(title => {
-        response.status(200).json(title)
+    articleModel.find()
+    .select({title: 1})
+    .populate("author", {firstName: 1})
+    .limit(20)
+    .then(articles => {
+        response.status(200).json(articles)
     })
     .catch(err => {
         console.log(err)
@@ -73,7 +74,9 @@ articleRouter.get("/", passport.authenticate("jwt", { session: false}), (request
 // functional
 articleRouter.get("/draft", passport.authenticate("jwt", { session: false}), async (request, response) => {
     const article = request.params.state
-    await articleModel.find({state: "draft"}).limit(20)
+    await articleModel.find({state: "draft"})
+    .select({title: 1})
+    .limit(20)
     .then(article => {
         response.status(200).send(article)
     })
@@ -89,6 +92,7 @@ articleRouter.get("/draft", passport.authenticate("jwt", { session: false}), asy
 articleRouter.get('/tags/:tags', (request, response) => {
     const tags = request.params.tags
     articleModel.find({tags: tags})
+    .select({title: 1})
     .then(tags => {
         response.status(200).send(tags)
     })
@@ -104,6 +108,7 @@ articleRouter.get('/tags/:tags', (request, response) => {
 articleRouter.get("/title/:title", (request, response) => {
     const title = request.params.title
     articleModel.findOne({title: title})
+    .select({title: 1})
     .then(title => {
         response.status(200).send(title)
     })
@@ -120,6 +125,7 @@ articleRouter.patch("/update/:id", passport.authenticate("jwt", { session: false
     const article = request.body
     article.lastUpdateAt = new Date()
     articleModel.findByIdAndUpdate(id, article, {new: true})
+    .select({title: 1})
     .then(newArticle => {
         response.status(200).send(newArticle)
     }).catch(err => {
@@ -157,10 +163,5 @@ articleRouter.get("/:id", (request, response) => {
         response.status(404).send(err)
     })
 });
-
-
-
-
-
 
 module.exports = articleRouter

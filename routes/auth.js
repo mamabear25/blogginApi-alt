@@ -1,7 +1,6 @@
 const express = require('express');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
-const { Router } = require('express');
 require('dotenv').config();
 
 const authRouter = express.Router();
@@ -34,7 +33,7 @@ authRouter.post(
                         if (error) return next(error);
 
                         const body = { _id: user._id, email: user.email };
-                        const token = jwt.sign({ user: body }, process.env.JWT_SECRET, { expiresIn: '5h' });
+                        const token = jwt.sign({ user: body }, process.env.JWT_SECRET, { expiresIn: '25h' });
 
                         return res.json({ token });
                     }

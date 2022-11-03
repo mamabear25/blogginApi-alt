@@ -8,13 +8,13 @@ const ObjectId = Schema.ObjectId;
 
 const UserSchema = new Schema ({
     id: ObjectId,
-    first_name: {
+    firstName: {
         type: String,
         required: true,
         trim: true,
         lowercase: true
     },
-    last_name: {
+    lastName: {
         type: String,
         required: true,
         trim: true,

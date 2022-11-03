@@ -21,13 +21,19 @@ const ArticleSchema = new Schema ({
         required: true
     },
     author: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
     state: {
         type: String,
         default: "draft",
         enum: ["published", "draft"]
+    },
+    reading_time: {
+        type: String
+    },
+    read_count: {
+        type: Number
     },
     created_at: {
         type: Date,
@@ -42,13 +48,4 @@ const ArticleSchema = new Schema ({
 
 // export model
 module.exports = mongoose.model("Article", ArticleSchema);
-// const ArticleModel = mongoose.model("articles", ArticleSchema)
-// module.exports = ArticleModel;
 
-// app.get("/users", UserControls.all);
-// app.get("/users/create", UserControls.create);
-// app.get("/users/:first_name", UserControls.find);
-// app.get("/users/:first_name/articles", UserControls.getAllArticles);
-
-// app.get("/articles", ArticleControls.all);
-// app.get("articles/:first_name/create", ArticleControls.create);
