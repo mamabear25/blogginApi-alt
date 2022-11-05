@@ -3,6 +3,9 @@ const articleModel = require("../models/articles");
 const articleRouter = express.Router();
 const {readingTime} = require("./readTime")
 const passport = require("passport");
+const userModel = require("../models/users");
+
+
 
 // Post new blog
 // functional
@@ -12,9 +15,9 @@ articleRouter.post("/", passport.authenticate("jwt", { session: false}), async (
         description: req.body.description,
         body: req.body.body,
         tags: req.body.tags,
-        id: req.user._id,
-        author: user.firstName,
-        reading_time: readingTime(req.body.body)
+        author: req.user,
+        reading_time: readingTime(req.body.body),
+        read_count: req.body.read_count
     });
     res.send(article);
 })
@@ -23,8 +26,9 @@ articleRouter.post("/", passport.authenticate("jwt", { session: false}), async (
 // get blogs by author
 //functional
 articleRouter.get("/user/articles", passport.authenticate("jwt", { session: false}), (request, response) => {
-    articleModel.find({"user": request.user})
+    articleModel.find({author: request.user})
     .select({title: 1})
+    .limit(20)
     .then(articles => {
         response.status(200).send(articles)
     })
@@ -35,13 +39,11 @@ articleRouter.get("/user/articles", passport.authenticate("jwt", { session: fals
 });
 
 
-// get list of published blogs
-// functional 
-articleRouter.get('/published', async (request, response) => {
-    const article = request.params.state
-    await articleModel.find({state: "published"})
+// get published blogs
+// functional
+articleRouter.get('/published', passport.authenticate("jwt", { session: false}), async (request, response) => {
+    await articleModel.find({author: request.user},{state: "published"})
     .select({title: 1})
-    .populate("author", {firstName: 1})
     .limit(20)
     .then(article => {
         response.status(200).send(article)
@@ -55,10 +57,10 @@ articleRouter.get('/published', async (request, response) => {
 
 // get all blogs
 // functional
-articleRouter.get("/", passport.authenticate("jwt", { session: false}), (request, response) => {
-    articleModel.find()
+articleRouter.get("/", async (request, response) => {
+    await articleModel.find({state: "published"})
+    .populate("author", {username: 1})
     .select({title: 1})
-    .populate("author", {firstName: 1})
     .limit(20)
     .then(articles => {
         response.status(200).json(articles)
@@ -73,8 +75,7 @@ articleRouter.get("/", passport.authenticate("jwt", { session: false}), (request
 // get draft blogs
 // functional
 articleRouter.get("/draft", passport.authenticate("jwt", { session: false}), async (request, response) => {
-    const article = request.params.state
-    await articleModel.find({state: "draft"})
+    await articleModel.find({author: request.user}, {state: "draft"})
     .select({title: 1})
     .limit(20)
     .then(article => {
@@ -105,7 +106,7 @@ articleRouter.get('/tags/:tags', (request, response) => {
 
 // get blogs by title
 //functional
-articleRouter.get("/title/:title", (request, response) => {
+articleRouter.get("/title/:title", async(request, response) => {
     const title = request.params.title
     articleModel.findOne({title: title})
     .select({title: 1})
@@ -120,48 +121,68 @@ articleRouter.get("/title/:title", (request, response) => {
 
 // update blog by id
 //functional
-articleRouter.patch("/update/:id", passport.authenticate("jwt", { session: false}), (request, response) => {
+articleRouter.patch("/update/:id", passport.authenticate("jwt", { session: false}), async (request, response, next) => {
     const id = request.params.id
     const article = request.body
+    const blogId = await articleModel.findById(id)
+    if(!blogId)
+    return response.status(404).json({
+        message: "Article does not exist"
+    });
+    if (blogId.author != request.user._id) 
+    return response.status(400).json({
+        message: "Hey Blobber, you're not authorized to perform that action!"
+    });
     article.lastUpdateAt = new Date()
-    articleModel.findByIdAndUpdate(id, article, {new: true})
-    .select({title: 1})
-    .then(newArticle => {
-        response.status(200).send(newArticle)
-    }).catch(err => {
-        console.loog(err)
-        res.status(500).send(err)
-    })
-});
+    await articleModel.findByIdAndUpdate(id, article, {new: true} )
+        .then(newArticle => {
+            response.status(200).send(newArticle)
+        }).catch(err => {
+            console.log(err)
+            response.status(500).send(err)
+        })
+    } 
+);
 
 
 // delete blog by id
 // functional
-articleRouter.delete("/delete/:id", passport.authenticate("jwt", { session: false}), (request, response) => {
+articleRouter.delete("/delete/:id", passport.authenticate("jwt", { session: false}),async (request, response) => {
     const id = request.params.id
+    const blogId = await articleModel.findById(id)
+    if(!blogId)
+    return response.status(404).json({
+        message: "Article does not exist"
+    });
+    if (blogId.author != request.user._id) 
+    return response.status(400).json("Hey Blobber, you're not allowed to delete another blobber's Article!");
     articleModel.findByIdAndRemove(id)
     .then(article => {
         response.status(200).send("Blog deleted succesfully")
     })
     .catch(err => {
         console.log(err)
-        response.status(500).send("Something went wrong")
+        response.status(500).send(err)
     })
 });
 
 
 // get blog by id
 // functional
-articleRouter.get("/:id", (request, response) => {
+articleRouter.get("/:id", async (request, response) => {
     const id = request.params.id
-    articleModel.findById(id)
+    const blogId = await articleModel.findById(id)
+    if(!blogId)
+    return response.status(404).json("Article does not exist");
+    await articleModel.findByIdAndUpdate(id, {$inc: {read_count: 1}}, {new: true})
     .then(article => {
         response.status(200).send(article)
     })
     .catch(err => {
         console.log(err)
-        response.status(404).send(err)
+        response.status(500).send(err)
     })
 });
+
 
 module.exports = articleRouter

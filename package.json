@@ -30,6 +30,7 @@
     "mongoose": "^6.7.0",
     "mongoose-tag-everything": "^2.0.4-a",
     "morgan": "^1.10.0",
+    "npm": "^8.19.3",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0"

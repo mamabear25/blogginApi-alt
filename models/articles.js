@@ -33,7 +33,8 @@ const ArticleSchema = new Schema ({
         type: String
     },
     read_count: {
-        type: Number
+        type: Number,
+        default: 0
     },
     created_at: {
         type: Date,

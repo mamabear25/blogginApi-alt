@@ -17,7 +17,7 @@ const authRoute = require("./routes/auth");
 
 
 // app.use(cors()) // add cors headers
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json())
 
 app.set('views', 'views');

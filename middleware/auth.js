@@ -29,11 +29,12 @@ passport.use("signup", new localStrategy(
     },
     async (req, email, password, done) => {
         try {
-            const firstName = req.body.first_name;
-            const lastName = req.body.last_name;
+            const firstName = req.body.firstName;
+            const lastName = req.body.lastName;
+            const username = req.body.username;
             const gender = req.body.gender;
             const bio = req.body.bio;
-            const user = await UserModel.create({ firstName, lastName, gender, bio, email, password });
+            const user = await UserModel.create({ firstName, lastName, username, gender, bio, email, password });
             return done(null, user);
         } catch (error) {
             done(error);

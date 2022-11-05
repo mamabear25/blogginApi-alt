@@ -20,6 +20,13 @@ const UserSchema = new Schema ({
         trim: true,
         lowercase: true
     },
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        lowercase: true,
+    },
     email: {
         type: String,
         required: true,
@@ -40,6 +47,7 @@ const UserSchema = new Schema ({
     gender : {
         type: String,
         enum: ["male", "female", "other"],
+        lowercase: true,
         trim: true
     },
     password: {
