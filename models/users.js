@@ -77,5 +77,3 @@ UserSchema.methods.isAuthenticated = async function(password) {
 
 schema.plugin(tagEverything);
 module.exports = mongoose.model('User', UserSchema); 
-// const UserModel = mongoose.model("users", UserSchema)
-// module.exports = UserModel;

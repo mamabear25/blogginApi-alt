@@ -46,5 +46,4 @@ authRouter.post(
     }
 );
 
-
 module.exports = authRouter;

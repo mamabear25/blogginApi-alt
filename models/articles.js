@@ -49,4 +49,3 @@ const ArticleSchema = new Schema ({
 
 // export model
 module.exports = mongoose.model("Article", ArticleSchema);
-

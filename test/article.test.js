@@ -196,24 +196,6 @@ describe("GET /blog/:id", () => {
   });
 });
 
-
-// describe("PUT /article/:id", () => {
-//   it("Should successfully edit an article", async () => {
-//     let article = {
-//       title: "My title is correct, init",
-//       body: "There was once a story of an little child s sfsf sf rserw f ewf we ew. He was the strongest across all the lands. His name was the incredible hulk. He was a green little fellow with the muscles of a lion and the smarts of a Hyena. He loved to write and sing, but all of that didn't matter because everyone that met him was repelled by his unique looks iewoii i ie iw i i ai i wei wri iwe fiw eif wei fiwe iwe i wei wei weci wei ier bie bi eig ei biwe fir iw irw gier wvire gir i eire ier bire bie i wkl efkwe flewfklew flkwe flkwe fklwe fkwe flwek flwe fklwef klwe flkwe flkwe flkwe fwkle fklwe fklwe fklwe flkew fkelw fklwe fklwe fkewl flwke flkwe flwek fwkel flewk flkwe fklwe flwer ge ier gegeroy gsxa qot",
-//       description:
-//         "A quick story about the life of the incredible hulk lker flke rflkr lk etlk ytlkr klerg erl gklrt hkl vdfkl vk bklerv eklr vkerl vkre gtkr hlk tkl fvlkwr fkelr klv erlk gkle rgkler glekr g",
-//       tags: ["drama", "coding", "Netflix"],
-//     };
-//     const response = await supertest(app)
-//       .put(`/article/${article_id}`)
-//       .send(article)
-//       .set("Authorization", authorization_string);
-//     expect(response.status).toBe(200);
-//   });
-// });
-
 describe("GET /blogs/user/articles", () => {
   it("Should get all blogs by current user", async () => {
     const response = await supertest(app)
@@ -236,5 +218,4 @@ describe("GET /blogs/published", () => {
 afterAll(async () => {
   await clearBloggerDb();
 });
-
 
