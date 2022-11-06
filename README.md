@@ -4,8 +4,7 @@ This is a simple REST API, it performs CRUD operations by making HTTP requests l
 
 This API is built using Node.JS, Express framework, mongoose and the MongoDB is the database of choice which is used for storing and retrieving data.
 
-THE REST API
-Create .env file
+### THE REST API
 
 Create a .env file to store your MongoDB database credentials and environment variables
 
@@ -16,11 +15,17 @@ MONGODB_URI = mongodb+srv://<username>:<password>@cluster0.6m5cz.mongodb.net/Rec
 ### Installation
 ------
 
-To run this project, install it locally using npm:
+
+
+To run this project,
+
+1. fork this repo
+2. clone the repo to your local machine
+3. Open th folder in your favourite text editor
+4. cd into the directory where the project is located.
+5. install it locally using npm:
 
 `$ npm install`
-
-cd into the directory where the project is located and run
 
 ```
 node index.js or nodemon index.js
@@ -88,3 +93,4 @@ node index.js or nodemon index.js
   "state": "published"
 }
 ```
+Explore the rest of the endpoints
