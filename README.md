@@ -4,6 +4,9 @@ This is a simple REST API, it performs CRUD operations by making HTTP requests l
 
 This API is built using Node.JS, Express framework, mongoose and the MongoDB is the database of choice which is used for storing and retrieving data.
 
+### Base Url
+https://techmomma1.onrender.com/
+
 ### THE REST API
 
 Create a .env file to store your MongoDB database credentials and environment variables
