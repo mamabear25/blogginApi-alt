@@ -1,6 +1,6 @@
 # blogginApi-alt
 ## Overview
-This is a simple REST API, you can perform CRUD operations on it by making HTTP requests like GET, POST, PATCH and DELETE.
+This is a simple REST API, it performs CRUD operations by making HTTP requests like GET, POST, PATCH and DELETE.
 
 This API is built using Node.JS, Express framework, mongoose and the MongoDB is the database of choice which is used for storing and retrieving data.
 
