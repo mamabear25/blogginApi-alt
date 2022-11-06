@@ -1,0 +1,47 @@
+[
+    {
+        "firstName": "Mfon",
+        "lastName": "Okon",
+        "username": "fonzy",
+        "bio": "shortie",
+        "gender": "female",
+        "email": "fonzy@gmail.com",
+        "password": "fonzylioness25"
+    },
+    {
+        "firstName": "larry",
+        "lastName": "gaga",
+        "username": "laxyzt",
+        "bio": "shortie",
+        "gender": "male",
+        "email": "folasnzy@gmail.com",
+        "password": "fonzylioness25"
+    },
+    {
+        "firstName": "idara",
+        "lastName": "Okukon",
+        "username": "dara",
+        "bio": "shortie",
+        "gender": "female",
+        "email": "dara@gmail.com",
+        "password": "daraobong"
+    },
+    {
+        "firstName": "ukana",
+        "lastName": "umo",
+        "username": "eton",
+        "bio": "shortie",
+        "gender": "male",
+        "email": "kani@gmail.com",
+        "password": "kanxyilbddfjbhg"
+    },
+    {
+        "firstName": "Eyo",
+        "lastName": "Eket",
+        "username": "ketty",
+        "bio": "cool",
+        "gender": "female",
+        "email": "ketty@gmail.com",
+        "password": "kettymma"
+    }
+]

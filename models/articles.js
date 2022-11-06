@@ -8,17 +8,17 @@ const ArticleSchema = new Schema ({
     id: ObjectId,
     title: {
         type: String,
-        required: true,
+        required:  [true, "Please provide a unique title for your Blog"],
         trim: true,
         unique: true
     },
     description: {
         type: String,
-        required: true
+        required: [true, "Please provide a description for your blogPost"]
     },
     body: {
         type: String,
-        required: true
+        required: [true, "Please write an article for your Blog"]
     },
     author: {
         type: mongoose.Schema.Types.ObjectId,

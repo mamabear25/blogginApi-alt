@@ -12,7 +12,7 @@ db.connectToMongoDB();
 
 
 //routes
-const articlesRoute = require("./routes/articles");
+const artRoute = require("./routes/articlesRoute");
 const authRoute = require("./routes/auth");
 
 
@@ -24,7 +24,7 @@ app.set('views', 'views');
 app.set('view engine', 'ejs');
 
 app.use('/', authRoute);
-app.use('/blogs', articlesRoute);
+app.use('/blogs', artRoute);
 
 app.get("/", (req, res) => {
     res.render("index");
@@ -46,5 +46,12 @@ app.use(function (err, req, res, next) {
     res.json({ error: err.message });
 });
 
+app.use (function(err, req, res, next) {
+    console.log(err);
+    res.status(err.status || 400);
+    res.json({error: err.message});
+})
 
-app.listen(PORT, () => log.cyan("SERVER STATUS", `Listening on port ${PORT}`))
+
+const server = app.listen(PORT, async () => await log.cyan("SERVER STATUS", `Listening on port ${PORT}`))
+module.exports = server;

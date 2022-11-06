@@ -10,26 +10,26 @@ const UserSchema = new Schema ({
     id: ObjectId,
     firstName: {
         type: String,
-        required: true,
+        required: [true, "Please provide your First Name"],
         trim: true,
         lowercase: true
     },
     lastName: {
         type: String,
-        required: true,
+        required: [true, "Please provide your Last Name"],
         trim: true,
         lowercase: true
     },
     username: {
         type: String,
-        required: true,
+        required: [true, "Please provide a Username"],
         unique: true,
         trim: true,
         lowercase: true,
     },
     email: {
         type: String,
-        required: true,
+        required: [true, "Please provide your email"],
         unique: true,
         trim: true,
         lowercase: true,
@@ -37,7 +37,7 @@ const UserSchema = new Schema ({
     },
     bio: {
         type: String,
-        required: true,
+        required: [true, "Please write something about yourself, here's an example... I'm Danny, and I'm a cool guy!"],
         trim: true
     },
     articles: [{
@@ -46,13 +46,14 @@ const UserSchema = new Schema ({
     }],
     gender : {
         type: String,
+        required: [true, "Please provide your gender"],
         enum: ["male", "female", "other"],
         lowercase: true,
         trim: true
     },
     password: {
         type: String,
-        required: true,
+        required: [true, "Please provide a strong password"],
         minlength: 8,
         trim: true,
         lowercase: true

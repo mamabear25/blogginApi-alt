@@ -4,7 +4,7 @@
   "description": "blogging api",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "cross-env NODE_ENV=test jest --testTimeout=19000"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
     "mercedlogger": "^1.0.1",
     "moment": "^2.29.4",
     "mongodb": "^4.11.0",
+    "mongodb-memory-server": "^8.9.5",
     "mongoose": "^6.7.0",
     "mongoose-tag-everything": "^2.0.4-a",
     "morgan": "^1.10.0",
@@ -34,5 +35,10 @@
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "jest": "^29.2.2",
+    "supertest": "^6.3.1"
   }
 }
