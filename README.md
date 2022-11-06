@@ -32,7 +32,7 @@ node index.js or nodemon index.js
 
 | S.no   | route            | Method |  Access       | Description  |
 | :---   |    :----        | ---:   |   :---:        |   :---        |
-| 1      | "/signup"        | POST   | PRIVATE       |     register new user      |
+| 1      | "/signup"        | POST   | PRIVATE       |     create a new user      |
 | 2      | "/login"         | POST   | PRIVATE       |      log in to the app   |
 | 3      | "/blogs"         | POST   | PRIVATE       |  post a new Blog           |
 | 4      | "/blogs"         | GET    | PUBLIC        |    get all published blogs on the app   |
@@ -45,3 +45,46 @@ node index.js or nodemon index.js
 | 11     | "/blogs/tags/:tags"| GET   | PRIVATE      |   get Blogs by Tags    |
 | 12     | "/blogs/title/:title"| GET| PRIVATE       |      get blogs by Title |
 
+
+### Here is a guide to using the application.
+-----
+
+- [x] create a new user 
+```json
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "username": "JohnDoe",
+  "bio": "cool cat",
+  "gender": "male",
+  "email": "johnny@example.com,
+  "password": "myverystrongpassword"
+}
+```
+- [x] Log into the application
+
+```json
+{
+  "email": "johnny@example.com,
+  "password": "myverystrongpassword"
+}
+```
+
+- [x] Post a new blog
+
+```json
+{
+    title: "my new blog",
+    "description": "Trying out blogging",
+    "body": "lorem ipsum lorem ipsum lorem ipsum, lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+    tags: ["first", "lorem", "new"]
+ }
+```
+    
+- [x] Update the state of the blog to published
+
+```json
+{
+  "state": "published"
+}
+```
